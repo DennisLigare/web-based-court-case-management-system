@@ -1,0 +1,84 @@
+header ul li .current{
+  background: #293503;
+  border-radius: 50%;
+}
+
+#main-body{
+  background: #293503;
+  color: #fff;
+}
+
+#contact{
+  display: inline-block;
+  position: fixed;
+  right: 0;
+}
+
+#contact .contact-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+#contact .contact-container a{
+  font-size: 30px;
+  color: #fff;
+  padding: 0 30px 10px 0;
+  align-items: center;
+  transition: all 1s ease-in-out;
+}
+
+#contact .contact-container a:hover {
+  color: #cfb53b;
+  transition: color 2s ease-in-out;
+}
+
+#about {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+#about .content{
+  padding-left: 20px;
+  padding-right: 60px;
+  width: 50%;
+}
+
+
+.gravel{
+  width: 400px;
+  height: 400px;
+  display: flex;
+}
+
+.gravel img{
+  border-radius: 60%;
+  max-width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}
+
+.gravel-image-mobile{
+  display: none;
+}
+
+@media screen and (max-width: 900px)  {
+  #about{
+      flex-direction: column;
+  }
+  #about .content{
+      width: 90%;
+  }
+  
+  .gravel-image-mobile{
+      display: block;
+  }
+  .gravel-image-desktop{
+      display: none;
+  }
+}
+

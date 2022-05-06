@@ -1,0 +1,22 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+}
+
+#main-body{
+  flex: 1;
+}
+
+button{
+  background-color: transparent;
+  border: none;
+  
+}
