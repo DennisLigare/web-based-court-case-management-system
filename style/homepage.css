@@ -82,3 +82,19 @@ header ul li .current{
   }
 }
 
+@media screen and (max-width: 900px) {
+  #about{
+    flex-direction: column;
+  }
+  #about .content{
+    width: 90%;
+  }
+
+  .gravel-image-mobile{
+    display: block;
+}
+.gravel-image-desktop{
+    display: none;
+}
+}
+

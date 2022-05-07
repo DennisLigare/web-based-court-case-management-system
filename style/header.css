@@ -113,3 +113,55 @@ nav ul li:hover{
             transform: translate(0);
   }
 }
+
+.burger-container{
+  display: none;
+}
+
+.mobile-menu{
+  font-size: 30px;
+  display: none;
+}
+
+.menu{
+  display: block;
+}
+
+.mobile-menu-open .mobile-menu{
+  display: none;
+}
+
+.close-menu{
+  display: none;
+  font-size: 25px;
+}
+
+.mobile-menu-open .close-menu{
+  display: block;
+}
+
+.mobile-menu-open .menu{
+  display: block; 
+}
+
+.mobile-menu-open .menu ul {
+  flex-direction: column;
+}
+
+.mobile-menu-open {
+  height: 100vh;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 850px) {
+  .burger-container{
+    display: block;
+  }
+
+  .mobile-menu{
+    display: block;
+  }
+  .menu ul{
+    display: none;
+  }
+}

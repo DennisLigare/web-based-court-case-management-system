@@ -34,6 +34,11 @@
         <li><a href="#About">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      
+      <div class="burger-container">
+        <button><i class="fa fa-bars mobile-menu" aria-hidden="true"></i></button>
+        <button><i class="fa fa-times-circle close-menu" aria-hidden="true"></i></button>
+      </div>
     </nav>
 
 
