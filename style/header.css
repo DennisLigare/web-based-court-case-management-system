@@ -161,7 +161,7 @@ nav ul li:hover{
   .mobile-menu{
     display: block;
   }
-  .menu ul{
+  .menu li{
     display: none;
   }
 }
