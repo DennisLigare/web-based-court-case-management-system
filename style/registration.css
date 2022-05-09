@@ -1,0 +1,16 @@
+.main-form {
+  background: #293503;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.container{
+  background: #fff;
+  
+}
+
+.container .form-header{
+  text-align: center;
+  color: #cfb53b;
+  border-bottom: solid #cfb53b 4px;
+}
