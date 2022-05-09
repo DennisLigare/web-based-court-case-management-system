@@ -152,8 +152,8 @@ $dob = $_POST['dob'] ?? '';
   <div class="container">
 
     <form method="POST" class="border w-75 mx-auto p-3 shadow-sm">
-      <!-- <h1 class="text-center text-primary border-3 border-bottom border-primary pb-3">Register</h1> -->
       <h1 class="form-header">Register</h1>
+      
       <?php if ($message) : ?>
         <div class="alert alert-danger">
           <?php echo $message ?>
