@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +33,9 @@
 
     <nav class="menu">
       <ul>
+        <?php if (($_SESSION)) : ?>
+          <li>Hello <?= $_SESSION['username'] ?></li>
+        <?php endif; ?>
         <li><a href="./index.php" class="current">Home</a></li>
         <li><a href="./login.php">Login</a></li>
         <li><a href="./registration.php">registration</a></li>

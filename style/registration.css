@@ -14,3 +14,32 @@
   color: #cfb53b;
   border-bottom: solid #cfb53b 4px;
 }
+
+#success {
+  height: 100%;
+}
+
+#success .container {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+
+#success .container div {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+#success .container div h1{
+  color: #cfb53b;
+  border-bottom: 1px solid;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  font-size: 34px;
+}
+
+#success .container div {
+  font-size: 18px;
+}

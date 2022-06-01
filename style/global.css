@@ -4,11 +4,15 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body{
   display: flex;
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
-  min-height: 100vh;
+  height: 100%;
 }
 
 #main-body{

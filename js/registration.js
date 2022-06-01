@@ -1,23 +1,142 @@
-// save all the tabs in avariable
-const tabs = document.querySelectorAll(".tab");
+// User type event listener
+let userType = document.getElementById("user_type");
 
-// go over each one of the tabs
-tabs.forEach((tab) => {
+if (userType) {
+  displayFields();
 
-  // for each tab, listen for the event 'click'
-  tab.addEventListener('click', function() {
+  userType.onchange = displayFields;
+}
 
-    // make the tabs change class .active on click
-    let activeTab = document.querySelector(".active");
-    activeTab.classList.remove("active"); //remove the class ative from the tab is active now
-    tab.classList.add("active"); // add the class active to the tab that I clicked
+function displayFields() {
+  if (userType.value == "admin") {
+    showAdminFields();
+    hideIndividualFields();
+    hideOrganisationFields();
+    hidelawfirmFields();
+  } else if(userType.value == "individual") { 
+    showIndividualFields();
+    hideAdminFields();
+    hideOrganisationFields();
+    hidelawfirmFields();
+  } else if(userType.value == "organisation") { 
+    showOrganisationFields();
+    hideAdminFields();
+    hideIndividualFields();
+    hideLawfirmFields();
+  } else if(userType.value == "lawfirm") {
+    showLawfirmFields();
+    hideAdminFields();
+    hideIndividualFields();
+    hideOrganisationFields();
+    
+  }
+}
 
-    // make the content-tabs change the class visible on click
-    let dataTab = tab.getAttribute('data-tab'); //save the attribute data-tab of the tab I have just clicked
-    let contentTab = document.getElementById(dataTab); //find the content-tab with id the same as the attribute data-tab that I just clicked
-    let visibleContentTab = document.querySelector(".visible"); // find the contant-tab that is visible
+function hideAdminFields() {
+  let adminFields = document.getElementById('admin_fields');
+  let fullName = document.getElementById('full_name')
 
-    visibleContentTab.classList.remove("visible"); // remove the class visible from the content-tab that is visible now
-    contentTab.classList.add("visible"); //add class visible to the contant-tab with the same id as the attribute data-tab that I clicked
-  })
-});
+  adminFields.classList.add('d-none')
+  fullName.required = false
+}
+
+function showAdminFields() {
+  let adminFields = document.getElementById('admin_fields');
+  let fullName = document.getElementById('full_name')
+
+  adminFields.classList.remove('d-none')
+  fullName.required = true
+}
+
+function hideIndividualFields() {
+  let individualsFields = document.getElementById("individual_fields");
+  let firstName = document.getElementById('first_name');
+  let lastName = document.getElementById('last_name');
+  let nationality = document.getElementById('nationality');
+  let idNumber = document.getElementById('id_number');
+
+  firstName.required = false
+  firstName.disabled = true
+
+  lastName.required = false
+  lastName.disabled = true
+  
+  nationality.required = false
+  nationality.disabled = true
+
+  idNumber.required = false
+  idNumber.disabled = true
+
+  individualsFields.classList.add("d-none");
+}
+
+function showIndividualFields() {
+  let individualsFields = document.getElementById("individual_fields");
+  let firstName = document.getElementById('first_name');
+  let lastName = document.getElementById('last_name');
+  let nationality = document.getElementById('nationality');
+  let idNumber = document.getElementById('id_number');
+
+  firstName.required = true
+  firstName.disabled = false
+
+  lastName.required = true
+  lastName.disabled = false
+
+  nationality.required = true
+  nationality.disabled = false
+
+  idNumber.required = true
+  idNumber.disabled = false
+
+  individualsFields.classList.remove("d-none");
+}
+
+function showOrganisationFields() {
+  let organisationFields = document.getElementById("organisation_fields");
+  let organisation_name = document.getElementById("organisation_name");
+
+  organisationFields.classList.remove("d-none");
+  organisation_name.required = true;
+  organisation_name.disabled = false;
+}
+function hideOrganisationFields() {
+  let organisationFields = document.getElementById("organisation_fields");
+  let organisation_name = document.getElementById("organisation_name");
+
+  organisationFields.classList.add("d-none");
+  organisation_name.required = false;
+  organisation_name.disabled = true;
+}
+
+function showLawfirmFields() {
+  let lawfirmFields = document.getElementById("lawfirm_fields");
+  let lawfirm_name = document.getElementById("lawfirm_name");
+
+  lawfirmFields.classList.remove("d-none");
+  lawfirm_name.required = true;
+  lawfirm_name.disabled = false;
+}
+function hideLawfirmFields() {
+  let lawfirmFields = document.getElementById("lawfirm_fields");
+  let lawfirm_name = document.getElementById("lawfirm_name");
+
+  lawfirmFields.classList.add("d-none");
+  lawfirm_name.required = false;
+  lawfirm_name.disabled = true;
+}
+
+// Password Verification
+let password = document.getElementById("password");
+let confirmPassword = document.getElementById("confirm_password");
+
+password.onchange = validatePassword;
+confirmPassword.onkeyup = validatePassword;
+
+function validatePassword() {
+  if (password.value != confirmPassword.value) {
+    confirmPassword.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirmPassword.setCustomValidity("");
+  }
+}
