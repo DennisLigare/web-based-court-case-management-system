@@ -1,0 +1,40 @@
+.main-form{
+  background: #293503;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.main-form .container{
+  background: #fff;
+}
+
+.container .login-header{
+  text-align: center;
+  color: #cfb53b;
+  border-bottom: solid #cfb53b 4px;
+}
+
+.main-form .container .input-group i{
+  color: #cfb53b;
+}
+
+
+.main-form .container .btn-secondary{
+  background:#4D6305;
+  color: #cfb53b;
+  
+}
+
+.main-form .container .btn-primary{
+  background: #293503;
+  color: #cfb53b;
+  border: none;
+  
+}
+.login-slot a{
+  color: #cfb53b;
+}
+
+
+
+

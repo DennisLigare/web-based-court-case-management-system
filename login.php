@@ -72,6 +72,7 @@ if ($_POST) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="stylesheet" href="./style/index.css">
   <title>Login</title>
 </head>
 <body>
@@ -93,8 +94,6 @@ if ($_POST) {
         <li><a href="./index.php" >Home</a></li>
         <li><a href="./login.php" class="current">Login</a></li>
         <li><a href="./registration.php">registration</a></li>
-        <!-- <li><a href="#About">About</a></li>
-        <li><a href="#contact">Contact</a></li> -->
       </ul>
 
       <div class="burger-container">
@@ -106,12 +105,13 @@ if ($_POST) {
 
   </header>
 
-  <main class="my-3 flex-grow-1">
+  <main class="main-form flex-grow-1">
 
   <div class="container">
 
-    <form method="POST" class="border w-50 mx-auto p-3 shadow-sm">
-      <h1 class="text-center text-primary border-3 border-bottom border-primary pb-3">Login</h1>
+    <form method="POST" class="login-slot w-50 mx-auto p-3 shadow-sm">
+      <!-- <h1 class="text-center text-primary border-3 border-bottom border-primary pb-3">Login</h1> -->
+      <h1 class="Login-header">Login</h1>
       
       <?php if ($message) : ?>
         <div class="alert alert-danger">
@@ -120,7 +120,7 @@ if ($_POST) {
       <?php endif; ?>
 
       <div class="mb-3">
-        <label for="email" class="form-label fw-bold">Email</label>
+        <label for="email" class="form-label fw-bold" >Email</label>
         <div class="input-group">
           <span class="input-group-text text-primary"><i class="fas fa-envelope"></i></span>
           <input type="text" name="email" id="email" class="form-control" value="<?php echo $email ?>" placeholder="Enter email" required>
@@ -135,17 +135,22 @@ if ($_POST) {
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="">
         <button type="reset" class="btn btn-secondary">Reset</button>
         <button type="submit" class="btn btn-primary">Login</button>
       </div>
       
-      <p>Don't have an account? <a href="registration.php" class="link-primary">Register Now</a></p>
+      <p>Don't have an account? <a href="registration.php" class="Register">Register Now</a></p>
     </form>
 
   </div>
 
 </main>
+
+
+<footer>
+    <p>WBCCMS &copy; 2022, All Rights Reserved</p>
+  </footer>
 
 
   

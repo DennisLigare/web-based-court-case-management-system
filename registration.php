@@ -299,11 +299,11 @@ $admin = $statement->fetch(PDO::FETCH_ASSOC);
                   placeholder="Confirm password" required>
               </div>
             </div>
-            <div class="mb-3">
+            <div >
               <button type="reset" class="btn btn-secondary">Reset</button>
-              <button type="submit" class="btn btn-primary">Register</button>
+              <button type="submit" class="btn">Register</button>
             </div>
-            <p>Already have an account? <a href="login.php" class="link-primary">Login</a></p>
+            <p>Already have an account? <a href="login.php" class="login">Login</a></p>
           </form>
     
         </div>

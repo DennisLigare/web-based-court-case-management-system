@@ -43,3 +43,18 @@
 #success .container div {
   font-size: 18px;
 }
+
+.main-form .container .btn{
+  background: #293503;
+  color: #cfb53b;
+}
+
+.main-form .container .btn-secondary{
+  background:#4D6305;
+  color: #cfb53b;
+}
+
+.main-form .login{
+  color: #cfb53b;
+}
+
