@@ -12,12 +12,12 @@ function displayFields() {
     showAdminFields();
     hideIndividualFields();
     hideOrganisationFields();
-    hidelawfirmFields();
+    hideLawfirmFields();
   } else if(userType.value == "individual") { 
     showIndividualFields();
     hideAdminFields();
     hideOrganisationFields();
-    hidelawfirmFields();
+    hideLawfirmFields();
   } else if(userType.value == "organisation") { 
     showOrganisationFields();
     hideAdminFields();

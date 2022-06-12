@@ -1,7 +1,7 @@
 <?php
 
 $pdo = new PDO(
-  "mysql:host=localhost;port=3306;dbname=court_management_system",
+  "mysql:host=localhost;port=3306;dbname=web-based-court-case-management-system",
   "root",
   ""
 );

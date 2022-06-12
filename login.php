@@ -2,6 +2,10 @@
 
 session_start();
 
+if ($_SESSION) {
+  header('Location: index.php');
+}
+
 require "db.php";
 
 $email = "";
@@ -45,7 +49,9 @@ if ($_POST) {
       $_SESSION['username'] = $user['name'] ?? $user['first_name'] ?? $user['organisation_name'] ?? $user['lawfirm_name'];
       $_SESSION['user_type'] = $login['rank'];
 
-      header("Location: index.php");
+      if ($login['rank'] === 'admin') {
+        header("Location: admin/dashboard.php");
+      }
     } else {
       $message = "You have entered an incorrect password.";
       $email = $_POST['email'];
@@ -135,7 +141,7 @@ if ($_POST) {
         </div>
       </div>
 
-      <div class="">
+      <div class="mb-3">
         <button type="reset" class="btn btn-secondary">Reset</button>
         <button type="submit" class="btn btn-primary">Login</button>
       </div>

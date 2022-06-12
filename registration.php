@@ -2,6 +2,12 @@
 
 session_start();
 
+
+if ($_SESSION) {
+  header('Location: index.php');
+}
+
+
 require "db.php";
 
 $user_type = "";
@@ -172,8 +178,6 @@ $admin = $statement->fetch(PDO::FETCH_ASSOC);
         <li><a href="./index.php" >Home</a></li>
         <li><a href="./login.php">Login</a></li>
         <li><a href="./registration.php" class="current">registration</a></li>
-        <li><a href="#About">About</a></li>
-        <li><a href="#contact">Contact</a></li>
       </ul>
 
       <div class="burger-container">

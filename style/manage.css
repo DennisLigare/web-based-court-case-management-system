@@ -1,0 +1,79 @@
+.header {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #cfb43a;
+  color: #cfb43a;
+}
+
+.header a {
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.primary {
+  background-color: #cfb43a;
+  color: #fff;
+}
+
+.primary:hover {
+  background-color: #d9c463;
+}
+
+.secondary {
+  background-color: #999999;
+  color: #000;
+}
+
+.secondary:hover {
+  background-color: #b3b3b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #cfb43a;
+}
+
+th,
+td {
+  padding-block: 10px;
+  border: 1px solid;
+  text-align: center;
+}
+
+.actions a {
+  font-size: 18px;
+  display: inline-block;
+}
+
+.actions a:hover {
+  transform: scale(1.1);
+}
+
+.edit {
+  color: #0774e0;
+  margin-right: 5px;
+}
+
+.delete {
+  color: #ff3333;
+}
+
+.actions form {
+  display: inline-block;
+}
+
+.actions form button {
+  font-size: 18px;
+}
+
+.actions form button:hover {
+  transform: scale(1.1);
+}
