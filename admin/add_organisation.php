@@ -4,8 +4,6 @@ session_start();
 
 require '../db.php';
 
-$individual_id = $_GET['id'];
-
 $error_message = '';
 $success_message = '';
 
@@ -18,45 +16,49 @@ if ($_POST) {
   $statement->execute();
   $login = $statement->fetch(PDO::FETCH_ASSOC);
 
-  if ($login && $login['individual_id'] == $individual_id) {
-    $statement = $pdo->prepare(
-      "UPDATE individual SET first_name=:first_name, last_name=:last_name, phone_number=:phone_number, email=:email, nationality=:nationality, id_number=:id_number WHERE id=:individual_id"
-    );
+  if (!$login) {
 
-    $statement->bindValue(":first_name", $_POST['first_name']);
-    $statement->bindValue(":last_name", $_POST['last_name']);
+    $statement = $pdo->prepare(
+      "INSERT INTO organisation 
+      (organisation_name, phone_number, email) 
+      VALUES (:organisation_name, :phone_number, :email)"
+    );
+    $statement->bindValue(":organisation_name", $_POST['organisation_name']);
     $statement->bindValue(":phone_number", $_POST['phone_number']);
     $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":nationality", $_POST['nationality']);
-    $statement->bindValue(":id_number", $_POST['id_number']);
-    $statement->bindValue(":individual_id", $individual_id);
     $statement->execute();
 
+    $user_id = $pdo->lastInsertId();
+
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
     $statement = $pdo->prepare(
-      "UPDATE login SET email=:email WHERE individual_id=:individual_id"
+      "INSERT INTO login 
+      (email, password, rank, organisation_id) 
+      VALUES (:email, :password, :rank, :user_id)"
     );
     $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":individual_id", $individual_id);
+    $statement->bindValue(":password", $password);
+    $statement->bindValue(":rank", 'admin');
+    $statement->bindValue(":user_id", $user_id);
     $statement->execute();
 
-    $success_message = "User updated successfully!";
+    $success_message = "User added successfully!";
   } else {
     $error_message = "A user with the same email already exists.";
   }
 }
 
-$statement = $pdo->prepare("SELECT * FROM individual WHERE id=:individual_id");
-$statement->bindValue("individual_id", $individual_id);
-$statement->execute();
-$individual = $statement->fetch(PDO::FETCH_ASSOC);
-
-$first_name = $individual['first_name'];
-$last_name = $individual['last_name'];
-$phone_number = $individual['phone_number'];
-$email = $individual['email'];
-$nationality = $individual['nationality'];
-$id_number = $individual['id_number'];
+if ($_POST && $error_message) {
+  $organisation_name = $_POST['organisation_name'];
+  $phone_number = $_POST['phone_number'];
+  $email = $_POST['email'];
+} else {
+  $organisation_name = '';
+  $phone_number = '';
+  $email = '';
+  unset($_POST);
+}
 
 ?>
 
@@ -109,9 +111,9 @@ $id_number = $individual['id_number'];
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Edit individual</h1>
+        <h1>Add Organisation</h1>
         <div>
-          <a href="individuals.php" class="secondary">Back</a>
+          <a href="organisations.php" class="secondary">Back</a>
         </div>
       </div>
 
@@ -129,29 +131,13 @@ $id_number = $individual['id_number'];
           </div>
         <?php endif; ?>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <div class="col">
-            <label for="first_name" class="form-label fw-bold">First Name:</label>
-            <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $first_name ?>" placeholder="Enter first name" required>
-          </div>
-          <div class="col">
-            <label for="last_name" class="form-label fw-bold">Last Name:</label>
-            <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo $last_name ?>" placeholder="Enter last name" required>
+            <label for="organisation" class="form-label fw-bold">Organisation Name:</label>
+            <input type="text" name="organisation_name" id="organisation_name" class="form-control" value="<?php echo $organisation_name ?>" placeholder="Enter organisation name" required>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <div class="col">
-            <label for="nationality" class="form-label fw-bold">Nationality</label>
-            <input type="text" name="nationality" id="nationality" class="form-control" value="<?php echo $nationality ?>" placeholder="Enter nationality" required>
-          </div>
-          <div class="col">
-            <label for="id_number" class="form-label fw-bold">ID Number:</label>
-            <input type="text" name="id_number" id="id_number" class="form-control" value="<?php echo $id_number ?>" placeholder="Enter ID number" required>
-          </div>
-        </div>
-
-        <!--  -->
         <div class="row mb-3">
           <div class="col">
             <label for="phone_number" class="form-label fw-bold">Phone Number:</label>
@@ -162,8 +148,19 @@ $id_number = $individual['id_number'];
             <input type="email" name="email" id="email" class="form-control" value="<?php echo $email ?>" placeholder="Enter email" required>
           </div>
         </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="password" class="form-label fw-bold">Password:</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required>
+          </div>
+          <div class="col">
+            <label for="confirm_password" class="form-label fw-bold">Confirm Password:</label>
+            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm password" required>
+          </div>
+        </div>
         <div>
-          <button type="submit" class="btn btn-warning">Update</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-warning">Add</button>
         </div>
       </form>
 
@@ -176,6 +173,7 @@ $id_number = $individual['id_number'];
     <p>WBCCMS &copy; 2022, All Rights Reserved</p>
   </footer>
 
+  <script src="../js/registration.js"></script>
   <script type="text/javascript" src="../js/mobilemenu.js"></script>
 </body>
 
