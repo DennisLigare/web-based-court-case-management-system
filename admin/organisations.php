@@ -4,17 +4,10 @@ session_start();
 
 require '../db.php';
 
-$statement = $pdo->query("SELECT * FROM admin");
-$admin_count = $statement->rowCount();
-
-$statement = $pdo->query("SELECT * FROM individual");
-$individual_count = $statement->rowCount();
-
-$statement = $pdo->query("SELECT * FROM lawfirm");
-$lawfirm_count = $statement->rowCount();
-
 $statement = $pdo->query("SELECT * FROM organisation");
-$organisation_count = $statement->rowCount();
+$organisations = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
 
 ?>
 
@@ -65,45 +58,42 @@ $organisation_count = $statement->rowCount();
 
   <div id="main-dashboard">
     <div class="container">
-      <div class="welcome">
-        <p>Welcome, <?php echo $_SESSION['username'] ?></p>
+      <div class="header">
+        <h1>Manage Organisations</h1>
+        <div>
+          <a href="add_organisation.php" class="primary">Add Organisations</a>
+          <a href="dashboard.php" class="secondary">Back</a>
+        </div>
       </div>
-
-      <div class="admin-dashboard">
-        <div class="dashboard-item">
-          <i class="fa-solid fa-user-gear"></i>
-          <div>
-            <p>Admins</p>
-            <p><?php echo $admin_count ?></p>
-            <a href="admins.php">Manage</a>
-          </div>
-        </div>
-        <div class="dashboard-item">
-          <i class="fa-solid fa-users"></i>
-          <div>
-            <p>Individuals</p>
-            <p><?php echo $individual_count ?></p>
-            <a href="individuals.php">Manage</a>
-          </div>
-        </div>
-        <div class="dashboard-item">
-          <i class="fa-solid fa-scale-balanced"></i>
-          <div>
-            <p>Lawfirms</p>
-            <p><?php echo $lawfirm_count ?></p>
-            <a href="#">Manage</a>
-          </div>
-        </div>
-        <div class="dashboard-item">
-          <i class="fa-solid fa-building-columns"></i>
-          <div>
-            <p>Organisations</p>
-            <p><?php echo $organisation_count ?></p>
-            <a href="organisations.php">Manage</a>
-          </div>
-        </div>
-
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Organisation Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($organisations as $i => $organisation) : ?>
+            <tr>
+              <td><?php echo $i + 1 ?></td>
+              <td><?php echo $organisation['organisation_name'] ?></td>
+              <td><?php echo $organisation['phone_number'] ?></td>
+              <td><?php echo $organisation['email'] ?></td>
+              <td class="actions">
+                <a href="edit_organisation.php?id=<?php echo $organisation['organisation_id'] ?>" class="edit"><i class="fa-solid fa-user-pen"></i></a>
+                <!-- <a href="delete_organisation.php?id=<?php echo $organisation['id'] ?>" class="delete"><i class="fa-solid fa-trash-can"></i></a> -->
+                <form action="delete_organisation.php" method="POST">
+                  <input type="hidden" name="organisation_id" value="<?php echo $organisation['organisation_id'] ?>">
+                  <button type="submit" class="delete"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
     </div>
 
   </div>

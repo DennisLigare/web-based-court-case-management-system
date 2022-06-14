@@ -2,7 +2,7 @@
 
 session_start();
 
-$admin_id = $_POST['individual_id'];
+$id = $_POST['id'];
 
 require '../db.php';
 
