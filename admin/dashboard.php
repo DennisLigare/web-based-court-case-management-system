@@ -51,7 +51,7 @@ $organisation_count = $statement->rowCount();
     <nav class="menu">
       <ul>
         <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <li><a href="../logout.php">Logout</a></li>
       </ul>
 
       <div class="burger-container">
@@ -91,7 +91,7 @@ $organisation_count = $statement->rowCount();
           <div>
             <p>Lawfirms</p>
             <p><?php echo $lawfirm_count ?></p>
-            <a href="#">Manage</a>
+            <a href="lawfirms.php">Manage</a>
           </div>
         </div>
         <div class="dashboard-item">

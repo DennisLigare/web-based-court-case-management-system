@@ -4,7 +4,7 @@ session_start();
 
 require '../db.php';
 
-$individual_id = $_GET['id'];
+$lawfirm_id = $_GET['id'];
 
 $error_message = '';
 $success_message = '';
@@ -18,26 +18,22 @@ if ($_POST) {
   $statement->execute();
   $login = $statement->fetch(PDO::FETCH_ASSOC);
 
-  if ($login && $login['individual_id'] == $individual_id) {
+  if ($login && $login['lawfirm_id'] == $lawfirm_id) {
     $statement = $pdo->prepare(
-      "UPDATE individual SET first_name=:first_name, last_name=:last_name, phone_number=:phone_number, email=:email, nationality=:nationality, id_number=:id_number WHERE id=:individual_id"
+      "UPDATE lawfirm SET lawfirm_name=:lawfirm_name, phone_number=:phone_number, email=:email WHERE lawfirm_id=:lawfirm_id"
     );
-
-    $statement->bindValue(":first_name", $_POST['first_name']);
-    $statement->bindValue(":last_name", $_POST['last_name']);
+    $statement->bindValue(":lawfirm_name", $_POST['lawfirm_name']);
     $statement->bindValue(":phone_number", $_POST['phone_number']);
     $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":nationality", $_POST['nationality']);
-    $statement->bindValue(":id_number", $_POST['id_number']);
-    $statement->bindValue(":individual_id", $individual_id);
+    $statement->bindValue(":lawfirm_id", $lawfirm_id);
     $statement->execute();
 
 
     $statement = $pdo->prepare(
-      "UPDATE login SET email=:email WHERE individual_id=:individual_id"
+      "UPDATE login SET email=:email WHERE lawfirm_id=:lawfirm_id"
     );
     $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":individual_id", $individual_id);
+    $statement->bindValue(":lawfirm_id", $lawfirm_id);
     $statement->execute();
 
     $success_message = "User updated successfully!";
@@ -46,17 +42,14 @@ if ($_POST) {
   }
 }
 
-$statement = $pdo->prepare("SELECT * FROM individual WHERE id=:individual_id");
-$statement->bindValue("individual_id", $individual_id);
+$statement = $pdo->prepare("SELECT * FROM lawfirm WHERE lawfirm_id=:lawfirm_id");
+$statement->bindValue("lawfirm_id", $lawfirm_id);
 $statement->execute();
-$individual = $statement->fetch(PDO::FETCH_ASSOC);
+$lawfirm = $statement->fetch(PDO::FETCH_ASSOC);
 
-$first_name = $individual['first_name'];
-$last_name = $individual['last_name'];
-$phone_number = $individual['phone_number'];
-$email = $individual['email'];
-$nationality = $individual['nationality'];
-$id_number = $individual['id_number'];
+$lawfirm_name = $lawfirm['lawfirm_name'];
+$phone_number = $lawfirm['phone_number'];
+$email = $lawfirm['email'];
 
 ?>
 
@@ -109,9 +102,9 @@ $id_number = $individual['id_number'];
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Edit individual</h1>
+        <h1>Edit Lawfirm</h1>
         <div>
-          <a href="individuals.php" class="secondary">Back</a>
+          <a href="lawfirms.php" class="secondary">Back</a>
         </div>
       </div>
 
@@ -129,29 +122,13 @@ $id_number = $individual['id_number'];
           </div>
         <?php endif; ?>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <div class="col">
-            <label for="first_name" class="form-label fw-bold">First Name:</label>
-            <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $first_name ?>" placeholder="Enter first name" required>
-          </div>
-          <div class="col">
-            <label for="last_name" class="form-label fw-bold">Last Name:</label>
-            <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo $last_name ?>" placeholder="Enter last name" required>
+            <label for="lawfirm" class="form-label fw-bold">lawfirm Name:</label>
+            <input type="text" name="lawfirm_name" id="lawfirm_name" class="form-control" value="<?php echo $lawfirm_name ?>" placeholder="Enter lawfirm name" required>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <div class="col">
-            <label for="nationality" class="form-label fw-bold">Nationality</label>
-            <input type="text" name="nationality" id="nationality" class="form-control" value="<?php echo $nationality ?>" placeholder="Enter nationality" required>
-          </div>
-          <div class="col">
-            <label for="id_number" class="form-label fw-bold">ID Number:</label>
-            <input type="text" name="id_number" id="id_number" class="form-control" value="<?php echo $id_number ?>" placeholder="Enter ID number" required>
-          </div>
-        </div>
-
-        <!--  -->
         <div class="row mb-3">
           <div class="col">
             <label for="phone_number" class="form-label fw-bold">Phone Number:</label>

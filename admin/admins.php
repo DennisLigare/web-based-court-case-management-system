@@ -44,7 +44,7 @@ $admins = $statement->fetchAll(PDO::FETCH_ASSOC);
     <nav class="menu">
       <ul>
         <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <li><a href="../logout.php">Logout</a></li>
       </ul>
 
       <div class="burger-container">
