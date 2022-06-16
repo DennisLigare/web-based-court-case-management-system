@@ -4,8 +4,8 @@ session_start();
 
 require '../db.php';
 
-$statement = $pdo->query("SELECT * FROM individual");
-$individuals = $statement->fetchAll(PDO::FETCH_ASSOC);
+$statement = $pdo->query("SELECT * FROM lawfirm");
+$lawfirms = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
 
@@ -59,9 +59,9 @@ $individuals = $statement->fetchAll(PDO::FETCH_ASSOC);
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Manage Individuals</h1>
+        <h1>Manage Lawfirms</h1>
         <div>
-          <a href="add_individual.php" class="primary">Add Individual</a>
+          <a href="add_lawfirm.php" class="primary">Add Lawfirm</a>
           <a href="dashboard.php" class="secondary">Back</a>
         </div>
       </div>
@@ -69,30 +69,24 @@ $individuals = $statement->fetchAll(PDO::FETCH_ASSOC);
         <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Law Name</th>
             <th>Phone Number</th>
             <th>Email</th>
-            <th>Nationality</th>
-            <th>Id Number</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($individuals as $i => $individual) : ?>
+          <?php foreach ($lawfirms as $i => $lawfirm) : ?>
             <tr>
               <td><?php echo $i + 1 ?></td>
-              <td><?php echo $individual['first_name'] ?></td>
-              <td><?php echo $individual['last_name'] ?></td>
-              <td><?php echo $individual['phone_number'] ?></td>
-              <td><?php echo $individual['email'] ?></td>
-              <td><?php echo $individual['nationality'] ?></td>
-              <td><?php echo $individual['id_number'] ?></td>
+              <td><?php echo $lawfirm['lawfirm_name'] ?></td>
+              <td><?php echo $lawfirm['phone_number'] ?></td>
+              <td><?php echo $lawfirm['email'] ?></td>
               <td class="actions">
-                <a href="edit_individual.php?id=<?php echo $individual['id'] ?>" class="edit"><i class="fa-solid fa-user-pen"></i></a>
-                <!-- <a href="delete_individual.php?id=<?php echo $individual['id'] ?>" class="delete"><i class="fa-solid fa-trash-can"></i></a> -->
-                <form action="delete_individual.php" method="POST">
-                  <input type="hidden" name="individual_id" value="<?php echo $individual['id'] ?>">
+                <a href="edit_lawfirm.php?id=<?php echo $lawfirm['lawfirm_id'] ?>" class="edit"><i class="fa-solid fa-user-pen"></i></a>
+                <!-- <a href="delete_lawfirm.php?id=<?php echo $lawfirm['id'] ?>" class="delete"><i class="fa-solid fa-trash-can"></i></a> -->
+                <form action="delete_lawfirm.php" method="POST">
+                  <input type="hidden" name="lawfirm_id" value="<?php echo $lawfirm['lawfirm_id'] ?>">
                   <button type="submit" class="delete"><i class="fa-solid fa-trash-can"></i></button>
                 </form>
               </td>

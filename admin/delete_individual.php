@@ -2,12 +2,12 @@
 
 session_start();
 
-$id = $_POST['id'];
+$id_number = $_POST['id_number'];
 
 require '../db.php';
 
-$statement = $pdo->prepare("DELETE FROM individual WHERE id=:individual_id");
-$statement->bindValue("individual_id", $individual_id);
+$statement = $pdo->prepare("DELETE FROM individual WHERE id_number=:id_number");
+$statement->bindValue("id_number", $id_number);
 $statement->execute();
 
 header("Location: individuals.php");
