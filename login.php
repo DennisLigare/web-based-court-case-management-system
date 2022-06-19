@@ -51,6 +51,12 @@ if ($_POST) {
 
       if ($login['rank'] === 'admin') {
         header("Location: admin/dashboard.php");
+      } elseif ($login['rank'] == 'individual') {
+        header("Location: individual/dashboard.php");
+      } elseif ($login['rank'] == 'lawfirm') {
+        header("Location: lawfirm/dashboard.php");
+      } elseif ($login['rank'] == 'organisation') {
+        header("Location: organisation/dashboard.php");
       }
     } else {
       $message = "You have entered an incorrect password.";
@@ -68,22 +74,22 @@ if ($_POST) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style/index.css"/>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-    integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style/index.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
   <link rel="stylesheet" href="./style/index.css">
   <title>Login</title>
 </head>
+
 <body>
 
-<header id="header">
+  <header id="header">
     <div class="display">
       <div class="logo-1">
         <img src="./img/CourtOfArms.png" alt="">
@@ -97,7 +103,7 @@ if ($_POST) {
 
     <nav class="menu">
       <ul>
-        <li><a href="./index.php" >Home</a></li>
+        <li><a href="./index.php">Home</a></li>
         <li><a href="./login.php" class="current">Login</a></li>
         <li><a href="./registration.php">registration</a></li>
       </ul>
@@ -113,52 +119,53 @@ if ($_POST) {
 
   <main class="main-form flex-grow-1">
 
-  <div class="container">
+    <div class="container">
 
-    <form method="POST" class="login-slot w-50 mx-auto p-3 shadow-sm">
-      <!-- <h1 class="text-center text-primary border-3 border-bottom border-primary pb-3">Login</h1> -->
-      <h1 class="Login-header">Login</h1>
-      
-      <?php if ($message) : ?>
-        <div class="alert alert-danger">
-          <?php echo $message ?>
+      <form method="POST" class="login-slot w-50 mx-auto p-3 shadow-sm">
+        <!-- <h1 class="text-center text-primary border-3 border-bottom border-primary pb-3">Login</h1> -->
+        <h1 class="Login-header">Login</h1>
+
+        <?php if ($message) : ?>
+          <div class="alert alert-danger">
+            <?php echo $message ?>
+          </div>
+        <?php endif; ?>
+
+        <div class="mb-3">
+          <label for="email" class="form-label fw-bold">Email</label>
+          <div class="input-group">
+            <span class="input-group-text text-primary"><i class="fas fa-envelope"></i></span>
+            <input type="text" name="email" id="email" class="form-control" value="<?php echo $email ?>" placeholder="Enter email" required>
+          </div>
         </div>
-      <?php endif; ?>
 
-      <div class="mb-3">
-        <label for="email" class="form-label fw-bold" >Email</label>
-        <div class="input-group">
-          <span class="input-group-text text-primary"><i class="fas fa-envelope"></i></span>
-          <input type="text" name="email" id="email" class="form-control" value="<?php echo $email ?>" placeholder="Enter email" required>
+        <div class="mb-3">
+          <label for="password" class="form-label fw-bold">Password:</label>
+          <div class="input-group">
+            <span class="input-group-text text-primary"><i class="fas fa-key"></i></span>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required>
+          </div>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="password" class="form-label fw-bold">Password:</label>
-        <div class="input-group">
-          <span class="input-group-text text-primary"><i class="fas fa-key"></i></span>
-          <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required>
+        <div class="mb-3">
+          <button type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-primary">Login</button>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <button type="reset" class="btn btn-secondary">Reset</button>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </div>
-      
-      <p>Don't have an account? <a href="registration.php" class="Register">Register Now</a></p>
-    </form>
+        <p>Don't have an account? <a href="registration.php" class="Register">Register Now</a></p>
+      </form>
 
-  </div>
+    </div>
 
-</main>
+  </main>
 
 
-<footer>
+  <footer>
     <p>WBCCMS &copy; 2022, All Rights Reserved</p>
   </footer>
 
 
-  
+
 </body>
+
 </html>
