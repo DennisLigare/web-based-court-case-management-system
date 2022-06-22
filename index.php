@@ -43,8 +43,8 @@ session_start();
           <li><a href="./login.php">Login</a></li>
           <li><a href="./registration.php">registration</a></li>
         <?php endif; ?>
-        <li><a href="#About">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <!-- <li><a href="#About">About</a></li>
+        <li><a href="#contact">Contact</a></li> -->
         <?php if ($_SESSION) : ?>
           <li><a href="logout.php">Logout</a></li>
         <?php endif; ?>
