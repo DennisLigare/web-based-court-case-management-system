@@ -16,6 +16,15 @@ $lawfirm_count = $statement->rowCount();
 $statement = $pdo->query("SELECT * FROM organisation");
 $organisation_count = $statement->rowCount();
 
+$statement = $pdo->query("SELECT * FROM judge");
+$judge_count = $statement->rowCount();
+
+$statement = $pdo->query("SELECT * FROM court_house");
+$court_house_count = $statement->rowCount();
+
+$statement = $pdo->query("SELECT * FROM court_house");
+$court_house_count = $statement->rowCount();
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +59,7 @@ $organisation_count = $statement->rowCount();
 
     <nav class="menu">
       <ul>
-        <li><a href="dashboard.php">Dashboard</a></li>
+        <li><a href="dashboard.php" class="current">Dashboard</a></li>
         <li><a href="../logout.php">Logout</a></li>
       </ul>
 
@@ -100,6 +109,31 @@ $organisation_count = $statement->rowCount();
             <p>Organisations</p>
             <p><?php echo $organisation_count ?></p>
             <a href="organisations.php">Manage</a>
+          </div>
+        </div>
+        <div class="dashboard-item">
+          <i class="fa-solid fa fa-gavel"></i>
+          <div>
+            <p>Judges</p>
+            <p><?php echo $judge_count ?></p>
+            <a href="judges.php">Manage</a>
+          </div>
+        </div>
+
+        <div class="dashboard-item">
+          <i class="fa-solid fa-home"></i>
+          <div>
+            <p>Court Houses</p>
+            <p><?php echo $court_house_count ?></p>
+            <a href="court_houses.php">Manage</a>
+          </div>
+        </div>
+        <div class="dashboard-item">
+          <i class="fa-solid fa-person-shelter"></i>
+          <div>
+            <p>Court House Rooms</p>
+            <p><?php echo $court_house_count ?></p>
+            <a href="court_house_rooms.php">Manage</a>
           </div>
         </div>
 

@@ -1,3 +1,10 @@
+court appointment
 court hse
 rooms
-judges
+
+
+
+how to merge local branches
+git log --oneline --all --graph
+
+git merge 
