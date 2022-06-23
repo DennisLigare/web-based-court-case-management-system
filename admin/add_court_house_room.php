@@ -4,59 +4,23 @@ session_start();
 
 require '../db.php';
 
-$error_message = '';
 $success_message = '';
 
 if ($_POST) {
-
   $statement = $pdo->prepare(
-    "SELECT * FROM login WHERE email=:email"
+    "INSERT INTO court_house_room
+    (room_number, court_house_id) 
+    VALUES (:room_number, :court_house_id)"
   );
-  $statement->bindValue(":email", $_POST['email']);
+  $statement->bindValue(":room_number", $_POST['room_number']);
+  $statement->bindValue(":court_house_id", $_POST['court_house_id']);
   $statement->execute();
-  $login = $statement->fetch(PDO::FETCH_ASSOC);
 
-  if (!$login) {
-
-    $statement = $pdo->prepare(
-      "INSERT INTO court_house_room 
-      (room_number) 
-      VALUES (:room_number)"
-    );
-    $statement->bindValue(":room_number", $_POST['room_number']);
-    $statement->execute();
-
-    $user_id = $pdo->lastInsertId();
-
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-    $statement = $pdo->prepare(
-      "INSERT INTO login 
-      (email, password, rank, admin_id) 
-      VALUES (:email, :password, :rank, :user_id)"
-    );
-    $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":password", $password);
-    $statement->bindValue(":rank", 'admin');
-    $statement->bindValue(":user_id", $user_id);
-    $statement->execute();
-
-    $success_message = "User added successfully!";
-  } else {
-    $error_message = "A user with the same email already exists.";
-  }
+  $success_message = "Court House Room added successfully!";
 }
 
-if ($_POST && $error_message) {
-  $full_name = $_POST['full_name'];
-  $phone_number = $_POST['phone_number'];
-  $email = $_POST['email'];
-} else {
-  $full_name = '';
-  $phone_number = '';
-  $email = '';
-  unset($_POST);
-}
+$statement = $pdo->query("SELECT * FROM court_house_room");
+$court_house_rooms = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -93,7 +57,7 @@ if ($_POST && $error_message) {
 
     <nav class="menu">
       <ul>
-        <li><a href="dashboard.php">Dashboard</a></li>
+        <li><a href="dashboard.php" class="current">Dashboard</a></li>
         <li><a href="../logout.php">Logout</a></li>
       </ul>
 
@@ -109,19 +73,13 @@ if ($_POST && $error_message) {
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Add Admin</h1>
+        <h1>Add Court House Room</h1>
         <div>
-          <a href="admins.php" class="secondary">Back</a>
+          <a href="court_house_rooms.php" class="secondary">Back</a>
         </div>
       </div>
 
       <form method="POST" class="border w-75 mx-auto p-3 shadow-sm">
-
-        <?php if ($error_message) : ?>
-          <div class="alert alert-danger">
-            <?php echo $error_message ?>
-          </div>
-        <?php endif; ?>
 
         <?php if ($success_message) : ?>
           <div class="alert alert-success">
@@ -129,34 +87,18 @@ if ($_POST && $error_message) {
           </div>
         <?php endif; ?>
 
-        <div class="row mb-3">
-          <div class="col">
-            <label for="full_name" class="form-label fw-bold">Full Name:</label>
-            <input type="text" name="full_name" id="full_name" class="form-control" value="<?php echo $full_name ?>" placeholder="Enter full name" required>
+        <div id="individual_fields">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="room_number" class="form-label fw-bold">Room Number:</label>
+              <input type="text" name="room_number" id="room_number" class="form-control" placeholder="Enter room number" required>
+            </div>
+            <div class="col">
+              <label for="court_house_id" class="form-label fw-bold">Court House ID:</label>
+              <input type="text" name="court_house_id" id="court_house_id" class="form-control" placeholder="Enter enter court house ID">
+            </div>
           </div>
-        </div>
 
-        <div class="row mb-3">
-          <div class="col">
-            <label for="phone_number" class="form-label fw-bold">Phone Number:</label>
-            <input type="text" name="phone_number" id="phone_number" class="form-control" value="<?php echo $phone_number ?>" maxlength="10" placeholder="Enter phone number" required>
-          </div>
-          <div class="col">
-            <label for="email" class="form-label fw-bold">Email:</label>
-            <input type="email" name="email" id="email" class="form-control" value="<?php echo $email ?>" placeholder="Enter email" required>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col">
-            <label for="password" class="form-label fw-bold">Password:</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required>
-          </div>
-          <div class="col">
-            <label for="confirm_password" class="form-label fw-bold">Confirm Password:</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm password" required>
-          </div>
-        </div>
-        <div>
           <button type="reset" class="btn btn-secondary">Reset</button>
           <button type="submit" class="btn btn-warning">Add</button>
         </div>
@@ -173,6 +115,7 @@ if ($_POST && $error_message) {
 
   <script src="../js/registration.js"></script>
   <script type="text/javascript" src="../js/mobilemenu.js"></script>
+  </script>
 </body>
 
 </html>

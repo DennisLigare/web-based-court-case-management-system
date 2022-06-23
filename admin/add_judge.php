@@ -61,7 +61,7 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     <nav class="menu">
       <ul>
-        <li><a href="dashboard.php">Dashboard</a></li>
+        <li><a href="dashboard.php" class="current">Dashboard</a></li>
         <li><a href="../logout.php">Logout</a></li>
       </ul>
 
