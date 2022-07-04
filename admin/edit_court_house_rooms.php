@@ -8,19 +8,28 @@ $success_message = '';
 
 if ($_POST) {
   $statement = $pdo->prepare(
-    "INSERT INTO court_house_room
-    (room_number, court_house_id) 
-    VALUES (:room_number, :court_house_id)"
+    "UPDATE court_house_room 
+    SET room_number=:room_number, court_house_id=:court_house_id 
+    WHERE id=:room_id"
   );
   $statement->bindValue(":room_number", $_POST['room_number']);
   $statement->bindValue(":court_house_id", $_POST['court_house_id']);
+  $statement->bindValue(":room_id", $_GET['id']);
   $statement->execute();
 
-  $success_message = "Court House Room added successfully!";
+  $success_message = "Court House Room updated successfully!";
 }
 
 $statement = $pdo->query("SELECT * FROM court_house");
 $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+$statement = $pdo->prepare("SELECT * FROM court_house_room WHERE id=:room_id");
+$statement->bindValue(":room_id", $_GET['id']);
+$statement->execute();
+$court_house = $statement->fetch(PDO::FETCH_ASSOC);
+
+$court_house_id = $court_house['court_house_id'];
+$room_number = $court_house['room_number'];
 
 ?>
 
@@ -73,7 +82,7 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Add Court House Room</h1>
+        <h1>Edit Court House Room</h1>
         <div>
           <a href="court_house_rooms.php" class="secondary">Back</a>
         </div>
@@ -87,29 +96,29 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
           </div>
         <?php endif; ?>
 
-        <div id="individual_fields">
-          <div class="row mb-3">
-            <div class="col">
-              <label for="court_house_id" class="form-label fw-bold">Court House:</label>
-              <select name="court_house_id" id="court_house_id" class="form-control">
-                <option value="">Select court house...</option>
-                <?php foreach ($court_houses as $court_house) : ?>
-                  <option value="<?php echo $court_house['id'] ?>"><?php echo $court_house['name'] ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-            <div class="col">
-              <label for="room_number" class="form-label fw-bold">Room Number:</label>
-              <input type="text" name="room_number" id="room_number" class="form-control" placeholder="Enter room number" required>
-            </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="court_house_id" class="form-label fw-bold">Court House:</label>
+            <select name="court_house_id" id="court_house_id" class="form-control">
+              <option value="">Select court house...</option>
+              <?php foreach ($court_houses as $court_house) : ?>
+                <option value="<?php echo $court_house['id'] ?>" <?php echo $court_house['id'] == $court_house_id ? 'selected' : '' ?>>
+                  <?php echo $court_house['name'] ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
           </div>
-
-          <button type="reset" class="btn btn-secondary">Reset</button>
-          <button type="submit" class="btn btn-warning">Add</button>
+          <div class="col">
+            <label for="room_number" class="form-label fw-bold">Room Number:</label>
+            <input type="text" name="room_number" id="room_number" class="form-control" value="<?php echo $room_number ?>" placeholder="Enter room number" required>
+          </div>
         </div>
-      </form>
 
+        <button type="submit" class="btn btn-warning">Update</button>
     </div>
+    </form>
+
+  </div>
 
   </div>
 

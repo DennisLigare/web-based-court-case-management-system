@@ -45,7 +45,7 @@ if ($_POST) {
       $statement->execute();
       $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-      $_SESSION['user_id'] = $user['admin_id'] ?? $user['individual_id'] ?? $user['organisation_id'] ?? $user['lawfirm_id'];
+      $_SESSION['user_id'] = $id;
       $_SESSION['username'] = $user['name'] ?? $user['first_name'] ?? $user['organisation_name'] ?? $user['lawfirm_name'];
       $_SESSION['user_type'] = $login['rank'];
 

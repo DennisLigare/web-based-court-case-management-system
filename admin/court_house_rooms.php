@@ -4,7 +4,11 @@ session_start();
 
 require '../db.php';
 
-$statement = $pdo->query("SELECT * FROM court_house_room");
+$statement = $pdo->query(
+  "SELECT *, court_house_room.id AS room_id FROM court_house_room 
+  JOIN court_house 
+  ON court_house_id=court_house.id"
+);
 $court_house_rooms = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -59,7 +63,7 @@ $court_house_rooms = $statement->fetchAll(PDO::FETCH_ASSOC);
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Manage Court Rooms</h1>
+        <h1>Manage Court House Rooms</h1>
         <div>
           <a href="add_court_house_room.php" class="primary">Add Court House Rooms</a>
           <a href="dashboard.php" class="secondary">Back</a>
@@ -69,6 +73,7 @@ $court_house_rooms = $statement->fetchAll(PDO::FETCH_ASSOC);
         <thead>
           <tr>
             <th>#</th>
+            <th>Court House</th>
             <th>Room Number</th>
             <th>Actions</th>
           </tr>
@@ -77,9 +82,10 @@ $court_house_rooms = $statement->fetchAll(PDO::FETCH_ASSOC);
           <?php foreach ($court_house_rooms as $i => $court_house_room) : ?>
             <tr>
               <td><?php echo $i + 1 ?></td>
+              <td><?php echo $court_house_room['name'] ?></td>
               <td><?php echo $court_house_room['room_number'] ?></td>
               <td class="actions">
-                <a href="edit_admin.php?id=<?php echo $court_house_room['id'] ?>" class="edit"><i class="fa-solid fa-user-pen"></i></a>
+                <a href="edit_court_house_rooms.php?id=<?php echo $court_house_room['room_id'] ?>" class="edit"><i class="fa-solid fa-user-pen"></i></a>
                 <!-- <a href="delete_admin.php?id=<?php echo $court_house_room['id'] ?>" class="delete"><i class="fa-solid fa-trash-can"></i></a> -->
                 <form action="delete_admin.php" method="POST">
                   <input type="hidden" name="id" value="<?php echo $court_house_room['id'] ?>">

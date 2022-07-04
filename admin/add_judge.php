@@ -9,15 +9,15 @@ $success_message = '';
 if ($_POST) {
   $statement = $pdo->prepare(
     "INSERT INTO judge
-    (first_name, last_name, phone_number, email, case_type) 
-    VALUES (:first_name, :last_name, :phone_number, :email, :case_type)"
+    (first_name, last_name, phone_number, email, case_type, room_id) 
+    VALUES (:first_name, :last_name, :phone_number, :email, :case_type, :room_id)"
   );
   $statement->bindValue(":first_name", $_POST['first_name']);
   $statement->bindValue(":last_name", $_POST['last_name']);
   $statement->bindValue(":phone_number", $_POST['phone_number']);
   $statement->bindValue(":email", $_POST['email']);
   $statement->bindValue(":case_type", $_POST['case_type']);
-  // $statement->bindValue(":room_id", $_POST['room_id']);
+  $statement->bindValue(":room_id", $_POST['room']);
   $statement->execute();
 
   $success_message = "Judge added successfully!";
@@ -42,6 +42,7 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style/index.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="../style/bootstrap.min.css">
   <title>Court management system</title>
 </head>
 
@@ -118,35 +119,35 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
             <input type="email" name="email" id="email" class="form-control" placeholder="Enter email" required>
           </div>
         </div>
-        <!-- <div class="row mb-3">
-          <div class="col">
-            <label for="court_house" class="form-label fw-bold">Court House</label>
-            <select name="court_house" id="court_house" class="form-control">
-              <option value="">Select court house...</option>
-              <?php foreach ($court_houses as $court_house) : ?>
-                <option value=""><?php echo $court_house['name'] ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-          <div class="col">
-            <label for="room_id" class="form-label fw-bold">Room</label>
-            <select name="room_id" id="room_id" class="form-control" required>
-              <option value="">Select room...</option>
-            </select>
-          </div>
-        </div> -->
         <div class="row mb-3">
           <div class="col">
             <label for="case_type" class="form-label fw-bold">Case Type:</label>
             <select name="case_type" id="case_type" class="form-control" required>
               <option value="">Select case type...</option>
               <option value="theft">Theft</option>
-              <!-- <option value="theft">Theft</option> -->
-              <!-- <option value="theft">Theft</option> -->
-              <!-- <option value="theft">Theft</option> -->
+              <option value="criminal_damage">Criminal Damage</option>
+              <option value="public_disorder">Public Disorder</option>
+              <option value="monitoring_offecences">Monitoring Offences</option>
             </select>
           </div>
           <div class="col"></div>
+        </div>
+        <div class="row mb-3">
+          <div class="col form-group">
+            <label for="court_house">Court House</label>
+            <select name="court_house" id="court_house" class="form-control">
+              <option value="">Select court house...</option>
+              <?php foreach ($court_houses as $court_house) : ?>
+                <option value="<?php echo $court_house['id'] ?>"><?php echo $court_house['name'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="col form-group">
+            <label for="room">Room</label>
+            <select name="room" id="room" class="form-control">
+              <option value="">Select room...</option>
+            </select>
+          </div>
         </div>
         <div>
           <button type="reset" class="btn btn-secondary">Reset</button>
@@ -165,6 +166,23 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
 
   <script src="../js/registration.js"></script>
   <script type="text/javascript" src="../js/mobilemenu.js"></script>
+
+  <script>
+    const courtHouse = document.getElementById('court_house');
+    const selectRoom = document.getElementById('room');
+
+    courtHouse.addEventListener('change', () => {
+      selectRoom.innerHTML = '<option value="">Select room...</option>'
+      fetch(`get_rooms.php?id=${courtHouse.value}`).then(response => response.json()).then(rooms => {
+        rooms.forEach(room => {
+          const option = document.createElement('option')
+          option.value = room.id
+          option.innerText = room.room_number
+          selectRoom.appendChild(option)
+        })
+      })
+
+    })
   </script>
 </body>
 

@@ -24,6 +24,7 @@ $judges = $statement->fetchAll(PDO::FETCH_ASSOC);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style/index.css">
+  <link rel="stylesheet" href="../style/fontawesome.css">
   <title>Court management system</title>
 </head>
 
