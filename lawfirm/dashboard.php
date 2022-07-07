@@ -73,6 +73,13 @@ require '../db.php';
             <a href="getdate.php">Court date</a>
           </div>
         </div>
+        <div class="dashboard-item">
+          <i class="fa-solid fa-scale-balanced"></i>
+          <div>
+            <p>Court Dates</p>
+            <a href="court_dates.php">View</a>
+          </div>
+        </div>
       </div>
 
 

@@ -4,7 +4,7 @@ session_start();
 
 require '../db.php';
 
-$lawfirm_id = $_SESSION['user_id'];
+$organisation_id = $_SESSION['user_id'];
 
 $error_message = '';
 $success_message = '';
@@ -18,22 +18,22 @@ if ($_POST) {
   $statement->execute();
   $login = $statement->fetch(PDO::FETCH_ASSOC);
 
-  if ($login && $login['lawfirm_id'] == $lawfirm_id) {
+  if ($login && $login['organisation_id'] == $organisation_id) {
     $statement = $pdo->prepare(
-      "UPDATE lawfirm SET lawfirm_name=:lawfirm_name, phone_number=:phone_number, email=:email WHERE lawfirm_id=:lawfirm_id"
+      "UPDATE organisation SET organisation_name=:organisation_name, phone_number=:phone_number, email=:email WHERE organisation_id=:organisation_id"
     );
-    $statement->bindValue(":lawfirm_name", $_POST['lawfirm_name']);
+    $statement->bindValue(":organisation_name", $_POST['organisation_name']);
     $statement->bindValue(":phone_number", $_POST['phone_number']);
     $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":lawfirm_id", $lawfirm_id);
+    $statement->bindValue(":organisation_id", $organisation_id);
     $statement->execute();
 
 
     $statement = $pdo->prepare(
-      "UPDATE login SET email=:email WHERE lawfirm_id=:lawfirm_id"
+      "UPDATE login SET email=:email WHERE organisation_id=:organisation_id"
     );
     $statement->bindValue(":email", $_POST['email']);
-    $statement->bindValue(":lawfirm_id", $lawfirm_id);
+    $statement->bindValue(":organisation_id", $organisation_id);
     $statement->execute();
 
     $success_message = "User updated successfully!";
@@ -42,14 +42,14 @@ if ($_POST) {
   }
 }
 
-$statement = $pdo->prepare("SELECT * FROM lawfirm WHERE lawfirm_id=:lawfirm_id");
-$statement->bindValue("lawfirm_id", $_SESSION['user_id']);
+$statement = $pdo->prepare("SELECT * FROM organisation WHERE organisation_id=:organisation_id");
+$statement->bindValue("organisation_id", $organisation_id);
 $statement->execute();
-$lawfirm = $statement->fetch(PDO::FETCH_ASSOC);
+$organisation = $statement->fetch(PDO::FETCH_ASSOC);
 
-$lawfirm_name = $lawfirm['lawfirm_name'];
-$phone_number = $lawfirm['phone_number'];
-$email = $lawfirm['email'];
+$organisation_name = $organisation['organisation_name'];
+$phone_number = $organisation['phone_number'];
+$email = $organisation['email'];
 
 ?>
 
@@ -102,7 +102,7 @@ $email = $lawfirm['email'];
   <div id="main-dashboard">
     <div class="container">
       <div class="header">
-        <h1>Edit Lawfirm</h1>
+        <h1>Edit Organisation</h1>
         <div>
           <a href="dashboard.php" class="secondary">Back</a>
         </div>
@@ -124,8 +124,8 @@ $email = $lawfirm['email'];
 
         <div class="mb-3">
           <div class="col">
-            <label for="lawfirm" class="form-label fw-bold">lawfirm Name:</label>
-            <input type="text" name="lawfirm_name" id="lawfirm_name" class="form-control" value="<?php echo $lawfirm_name ?>" placeholder="Enter lawfirm name" required>
+            <label for="organisation" class="form-label fw-bold">Organisation Name:</label>
+            <input type="text" name="organisation_name" id="organisation_name" class="form-control" value="<?php echo $organisation_name ?>" placeholder="Enter organisation name" required>
           </div>
         </div>
 
