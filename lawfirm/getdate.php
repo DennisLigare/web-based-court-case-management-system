@@ -8,7 +8,7 @@ $success_message = "";
 
 if ($_POST) {
   $statement = $pdo->prepare(
-    "INSERT INTO court_date_request (reference_no, court_house_id, case_type, defendant_name, defendant_national_id, accused_name, accused_national_id, individual_id) VALUES (:reference_no, :court_house_id, :case_type, :defendant_name, :defendant_id, :accused_name, :accused_id, :individual_id)"
+    "INSERT INTO court_date_request (reference_no, court_house_id, case_type, defendant_name, defendant_national_id, accused_name, accused_national_id, lawfirm_id) VALUES (:reference_no, :court_house_id, :case_type, :defendant_name, :defendant_id, :accused_name, :accused_id, :lawfirm_id)"
   );
   $statement->bindValue(":reference_no", $_POST['ref_no']);
   $statement->bindValue(":court_house_id", $_POST['court_house']);
@@ -17,7 +17,7 @@ if ($_POST) {
   $statement->bindValue(":defendant_id", $_POST['defendant_id']);
   $statement->bindValue(":accused_name", $_POST['accused_name']);
   $statement->bindValue(":accused_id", $_POST['accused_id']);
-  $statement->bindValue(":individual_id", $_SESSION['user_id']);
+  $statement->bindValue(":lawfirm_id", $_SESSION['user_id']);
   $statement->execute();
 
   $request_id = $pdo->lastInsertId();
