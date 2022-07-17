@@ -2,10 +2,12 @@
 
 session_start();
 
+$appointment_id = $_GET['id'];
+
 require '../db.php';
 
 $statement = $pdo->prepare(
-  "SELECT *, court_appointment.id AS court_appointment_id FROM court_appointment 
+  "SELECT * FROM court_appointment 
   JOIN court_date_request 
   ON court_date_request_id=court_date_request.id 
   JOIN court_house 
@@ -14,11 +16,11 @@ $statement = $pdo->prepare(
   ON court_house_room_id=court_house_room.id 
   JOIN judge 
   ON court_house_room_id=room_id
-  WHERE individual_id=:individual_id"
+  WHERE court_appointment.id=:id"
 );
-$statement->bindValue(":individual_id", $_SESSION['user_id']);
+$statement->bindValue(":id", $appointment_id);
 $statement->execute();
-$court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
+$court_date = $statement->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -36,6 +38,7 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style/index.css">
+  <link rel="stylesheet" href="../style/print.css">
   <title>Court management system</title>
 </head>
 
@@ -68,42 +71,64 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
 
   </header>
 
-  <div id="main-dashboard">
+  <div id="main-dashboard" class="main-form">
     <div class="container">
-      <div class="header">
-        <h1>Court Dates</h1>
-        <div>
-          <a href="dashboard.php" class="secondary">Back</a>
+      <div class="border shadow-lg p-3 w-75 mx-auto">
+        <div class="header">
+          <h1>Court Date Details</h1>
+          <div>
+            <a href="court_dates.php" class="secondary">Back</a>
+          </div>
         </div>
+
+        <h2>Case Details</h2>
+        <div class="details">
+          <div>
+            <div>
+              <p>Case Reference No.: <span><?php echo $court_date['reference_no'] ?></span></p>
+            </div>
+            <div>
+              <p>Case Type: <span><?php echo ucfirst($court_date['case_type']) ?></span></p>
+            </div>
+            <div>
+              <p>Court Date: <span><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></span></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <p>Defendant Name: <span><?php echo $court_date['defendant_name'] ?></span></p>
+            </div>
+            <div>
+              <p>Defendant ID No.: <span><?php echo $court_date['defendant_national_id'] ?></span></p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <p>Accused Name: <span><?php echo $court_date['accused_name'] ?></span></p>
+            </div>
+            <div>
+              <p>Accused ID No.: <span><?php echo $court_date['accused_national_id'] ?></span></p>
+            </div>
+          </div>
+        </div>
+        <h2>Court Details</h2>
+        <div class="details">
+          <div>
+            <p>Court House: <span><?php echo $court_date['name'] ?></span></p>
+          </div>
+          <div>
+            <p>Room Number: <span><?php echo $court_date['room_number'] ?></span></p>
+          </div>
+          <div>
+            <p>Judge: <span><?php echo $court_date['first_name'] . ' ' . $court_date['last_name']  ?></span></p>
+          </div>
+        </div>
+        <button class="print-btn" onclick="window.print()">
+          <i class="fa-solid fa-print"></i>
+          Print
+        </button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Reference No</th>
-            <th>Case Type</th>
-            <th>Court House</th>
-            <th>Room</th>
-            <th>Court Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($court_dates as $i => $court_date) : ?>
-            <tr>
-              <td><?php echo $i + 1 ?></td>
-              <td><?php echo $court_date['reference_no'] ?></td>
-              <td><?php echo ucfirst($court_date['case_type']) ?></td>
-              <td><?php echo $court_date['name'] ?></td>
-              <td><?php echo $court_date['room_number'] ?></td>
-              <td><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></td>
-              <td class="actions">
-                <a href="court_date_details.php?id=<?php echo $court_date['court_appointment_id'] ?>" class="btn btn-outline-primary btn-sm">Details</a>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+
     </div>
 
   </div>

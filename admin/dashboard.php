@@ -25,6 +25,10 @@ $court_house_count = $statement->rowCount();
 $statement = $pdo->query("SELECT * FROM court_house");
 $court_house_count = $statement->rowCount();
 
+$statement = $pdo->query("SELECT * FROM court_appointment");
+$court_dates = $statement->rowCount();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -134,6 +138,14 @@ $court_house_count = $statement->rowCount();
             <p>Court House Rooms</p>
             <p><?php echo $court_house_count ?></p>
             <a href="court_house_rooms.php">Manage</a>
+          </div>
+        </div>
+        <div class="dashboard-item">
+          <i class="fa-solid fa-calendar"></i>
+          <div>
+            <p>Court Appointments</p>
+            <p><?php echo $court_dates ?></p>
+            <a href="court_dates.php">View</a>
           </div>
         </div>
 

@@ -13,10 +13,8 @@ $statement = $pdo->prepare(
   JOIN court_house_room 
   ON court_house_room_id=court_house_room.id 
   JOIN judge 
-  ON court_house_room_id=room_id
-  WHERE individual_id=:individual_id"
+  ON court_house_room_id=room_id"
 );
-$statement->bindValue(":individual_id", $_SESSION['user_id']);
 $statement->execute();
 $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
 

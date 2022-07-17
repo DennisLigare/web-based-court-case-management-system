@@ -1,7 +1,3 @@
-#main-dashboard {
-  height: 100%;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -57,4 +53,37 @@
 
 .dashboard-item div p {
   margin-bottom: 10px;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 20px;
+}
+
+.details div {
+  margin-bottom: 10px;
+}
+
+.details p {
+  font-weight: bold;
+}
+
+.details span {
+  font-weight: initial;
+}
+
+.details p {
+  margin-bottom: 0;
+}
+
+.print-btn {
+  background-color: #dadada;
+  border: 1px solid #cfb53b;
+  border-radius: 5px;
+  padding: 20px 30px;
+}
+
+.print-btn i {
+  color: #cfb53b;
 }
