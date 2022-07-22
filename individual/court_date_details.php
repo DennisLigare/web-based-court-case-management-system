@@ -85,7 +85,7 @@ $court_date = $statement->fetch(PDO::FETCH_ASSOC);
         <div class="details">
           <div>
             <div>
-              <p>Case Reference No.: <span><?php echo $court_date['reference_no'] ?></span></p>
+              <p>Case Reference No: <span><?php echo $court_date['reference_no'] ?></span></p>
             </div>
             <div>
               <p>Case Type: <span><?php echo ucfirst($court_date['case_type']) ?></span></p>

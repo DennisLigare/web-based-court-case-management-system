@@ -22,8 +22,8 @@ $judge_count = $statement->rowCount();
 $statement = $pdo->query("SELECT * FROM court_house");
 $court_house_count = $statement->rowCount();
 
-$statement = $pdo->query("SELECT * FROM court_house");
-$court_house_count = $statement->rowCount();
+$statement = $pdo->query("SELECT * FROM court_house_room");
+$court_house_room_count = $statement->rowCount();
 
 $statement = $pdo->query("SELECT * FROM court_appointment");
 $court_dates = $statement->rowCount();
@@ -136,7 +136,7 @@ $court_dates = $statement->rowCount();
           <i class="fa-solid fa-person-shelter"></i>
           <div>
             <p>Court House Rooms</p>
-            <p><?php echo $court_house_count ?></p>
+            <p><?php echo $court_house_room_count ?></p>
             <a href="court_house_rooms.php">Manage</a>
           </div>
         </div>
