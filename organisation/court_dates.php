@@ -5,7 +5,7 @@ session_start();
 require '../db.php';
 
 $statement = $pdo->prepare(
-  "SELECT * FROM court_appointment 
+  "SELECT *, court_appointment.id AS court_appointment_id  FROM court_appointment 
   JOIN court_date_request 
   ON court_date_request_id=court_date_request.id 
   JOIN court_house 
@@ -84,7 +84,7 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
             <th>Case Type</th>
             <th>Court House</th>
             <th>Room</th>
-            <th>Judge</th>
+            <th>Court Date</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -93,15 +93,16 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
             <tr>
               <td><?php echo $i + 1 ?></td>
               <td><?php echo $court_date['reference_no'] ?></td>
-              <td><?php echo ucfirst($court_date['case_type']) ?></td>
+              <td><?php echo ucwords(implode(' ', explode('_', $court_date['case_type']))) ?></td>
               <td><?php echo $court_date['name'] ?></td>
               <td><?php echo $court_date['room_number'] ?></td>
-              <td><?php echo $court_date['first_name'] . ' ' . $court_date['last_name'] ?></td>
+              <td><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></td>
               <td class="actions">
-                <a href="#" class="btn btn-outline-primary btn-sm">Details</a>
+                <a href="court_date_details.php?id=<?php echo $court_date['court_appointment_id'] ?>" class="btn btn-outline-primary btn-sm">Details</a>
               </td>
             </tr>
           <?php endforeach; ?>
+
         </tbody>
       </table>
     </div>

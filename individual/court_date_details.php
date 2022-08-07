@@ -88,7 +88,7 @@ $court_date = $statement->fetch(PDO::FETCH_ASSOC);
               <p>Case Reference No: <span><?php echo $court_date['reference_no'] ?></span></p>
             </div>
             <div>
-              <p>Case Type: <span><?php echo ucfirst($court_date['case_type']) ?></span></p>
+              <p>Case Type: <span><?php echo ucwords(implode(' ', explode('_', $court_date['case_type']))) ?></span></p>
             </div>
             <div>
               <p>Court Date: <span><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></span></p>
@@ -120,7 +120,7 @@ $court_date = $statement->fetch(PDO::FETCH_ASSOC);
             <p>Room Number: <span><?php echo $court_date['room_number'] ?></span></p>
           </div>
           <div>
-            <p>Judge: <span><?php echo $court_date['first_name'] . ' ' . $court_date['last_name']  ?></span></p>
+            <p>Judge: <span><?php echo 'Hon. Justice ' . $court_date['first_name'] . ' ' . $court_date['last_name']  ?></span></p>
           </div>
         </div>
         <button class="print-btn" onclick="window.print()">

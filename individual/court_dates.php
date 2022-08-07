@@ -93,7 +93,7 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
             <tr>
               <td><?php echo $i + 1 ?></td>
               <td><?php echo $court_date['reference_no'] ?></td>
-              <td><?php echo ucfirst($court_date['case_type']) ?></td>
+              <td><?php echo ucwords(implode(' ', explode('_', $court_date['case_type']))) ?></td>
               <td><?php echo $court_date['name'] ?></td>
               <td><?php echo $court_date['room_number'] ?></td>
               <td><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></td>
@@ -101,7 +101,7 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <a href="court_date_details.php?id=<?php echo $court_date['court_appointment_id'] ?>" class="btn btn-outline-primary btn-sm">Details</a>
               </td>
             </tr>
-          <?php endforeach; ?>
+            <?php endforeach; ?>8
         </tbody>
       </table>
     </div>

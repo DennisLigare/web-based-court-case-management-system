@@ -91,7 +91,7 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
             <tr>
               <td><?php echo $i + 1 ?></td>
               <td><?php echo $court_date['reference_no'] ?></td>
-              <td><?php echo ucfirst($court_date['case_type']) ?></td>
+              <td><?php echo ucwords(implode(' ', explode('_', $court_date['case_type']))) ?></td>
               <td><?php echo $court_date['name'] ?></td>
               <td><?php echo $court_date['room_number'] ?></td>
               <td><?php echo date_format(date_create($court_date['appointment_date']), 'd-m-Y') ?></td>

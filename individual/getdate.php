@@ -34,41 +34,79 @@ if ($_POST) {
   $statement->bindValue(":case_type", $_POST['case_type']);
   $statement->bindValue(":court_house_id", $_POST['court_house']);
   $statement->execute();
-  $data = $statement->fetch(PDO::FETCH_ASSOC);
+  $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
   $date = date_create(date('Y-m-d'));
   date_add($date, date_interval_create_from_date_string("1 day"));
 
-  $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
-  $statement->bindValue(":room_id", $data['room_id']);
-  $statement->bindValue(":date", date_format($date, 'Y-m-d'));
-  $statement->execute();
-  $result = $statement->fetch(PDO::FETCH_ASSOC);
+  if (count($data) == 1) {
+    $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
+    $statement->bindValue(":room_id", $data['room_id']);
+    $statement->bindValue(":date", date_format($date, 'Y-m-d'));
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-  if ($result) {
+    if ($result) {
 
-    while ($result) {
-      date_add($date, date_interval_create_from_date_string("1 day"));
+      while ($result) {
+        date_add($date, date_interval_create_from_date_string("1 day"));
 
-      $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
-      $statement->bindValue(":room_id", $data['room_id']);
-      $statement->bindValue(":date", date_format($date, 'Y-m-d'));
-      $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
+        $statement->bindValue(":room_id", $data['room_id']);
+        $statement->bindValue(":date", date_format($date, 'Y-m-d'));
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-      if (!$result) {
-        break;
+        if (!$result) {
+          break;
+        }
       }
     }
-  }
 
-  if (!$result) {
+    if (!$result) {
+      $statement = $pdo->prepare(
+        "INSERT INTO court_appointment (court_date_request_id, court_house_room_id, appointment_date) 
+        VALUES (:request_id, :room_id, :appointment_date)"
+      );
+      $statement->bindValue(":request_id", $request_id);
+      $statement->bindValue(":room_id", $data['room_id']);
+      $statement->bindValue(":appointment_date", date_format($date, 'Y-m-d'));
+      $statement->execute();
+
+      header('Location: court_dates.php');
+    }
+  } else {
+    $date_available = false;
+    $index = null;
+
+    while (!$date_available) {
+      foreach ($data as $i => $room) {
+        $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
+        $statement->bindValue(":room_id", $room['room_id']);
+        $statement->bindValue(":date", date_format($date, 'Y-m-d'));
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$result) {
+          $date_available = true;
+          $index = $i;
+          break;
+        }
+      }
+
+      if ($date_available) {
+        break;
+      }
+
+      date_add($date, date_interval_create_from_date_string("1 day"));
+    }
+
     $statement = $pdo->prepare(
       "INSERT INTO court_appointment (court_date_request_id, court_house_room_id, appointment_date) 
       VALUES (:request_id, :room_id, :appointment_date)"
     );
     $statement->bindValue(":request_id", $request_id);
-    $statement->bindValue(":room_id", $data['room_id']);
+    $statement->bindValue(":room_id", $data[$index]['room_id']);
     $statement->bindValue(":appointment_date", date_format($date, 'Y-m-d'));
     $statement->execute();
 
@@ -160,7 +198,7 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
             <option value="theft">Theft</option>
             <option value="Criminal_damage">Criminal Damage</option>
             <option value="public_disorder">Public Disorder</option>
-            <option value="monitoring_offecences">Monitoring Offences</option>
+            <option value="monitoring_offences">Monitoring Offences</option>
           </select>
         </div>
         <div class="row">

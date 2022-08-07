@@ -77,7 +77,7 @@ require '../db.php';
           <i class="fa-solid fa-scale-balanced"></i>
           <div>
             <p>Court Dates</p>
-            <a href="#">View</a>
+            <a href="court_dates.php">View</a>
           </div>
         </div>
       </div>

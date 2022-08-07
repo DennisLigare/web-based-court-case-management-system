@@ -152,9 +152,9 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
             <select name="case_type" id="case_type" class="form-control" required>
               <option value="">Select case type...</option>
               <option value="theft" <?php echo $case_type == 'theft' ? 'selected' : '' ?>>Theft</option>
-              <!-- <option value="theft" <?php echo $case_type == 'theft' ? 'selected' : '' ?>>Theft</option>
-              <option value="theft" <?php echo $case_type == 'theft' ? 'selected' : '' ?>>Theft</option>
-              <option value="theft" <?php echo $case_type == 'theft' ? 'selected' : '' ?>>Theft</option> -->
+              <option value="criminal_damage" <?php echo $case_type == 'criminal_damage' ? 'selected' : '' ?>>Criminal Damage</option>
+              <option value="public_disorder" <?php echo $case_type == 'public_disorder' ? 'selected' : '' ?>>Public Disorder</option>
+              <option value="monitoring_offences" <?php echo $case_type == 'monitoring_offences' ? 'selected' : '' ?>>Monitoring Offences</option>
             </select>
           </div>
           <div class="col"></div>
