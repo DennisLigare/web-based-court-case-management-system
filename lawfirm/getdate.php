@@ -224,7 +224,7 @@ $court_houses = $statement->fetchAll(PDO::FETCH_ASSOC);
             <option value="theft">Theft</option>
             <option value="Criminal_damage">Criminal Damage</option>
             <option value="public_disorder">Public Disorder</option>
-            <option value="monitoring_offecences">Monitoring Offences</option>
+            <option value="monitoring_offences">Monitoring Offences</option>
           </select>
         </div>
         <div class="row">
