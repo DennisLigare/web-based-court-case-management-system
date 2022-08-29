@@ -41,6 +41,14 @@ if ($_POST) {
   $date = date_create(date('Y-m-d'));
   date_add($date, date_interval_create_from_date_string("1 day"));
 
+  if (in_array(date_format($date, 'l'), ['Saturday', 'Sunday'])) {
+    if (date_format($date, 'l') == 'Saturday') {
+      date_add($date, date_interval_create_from_date_string("2 days"));
+    } elseif (date_format($date, 'l') == 'Sunday') {
+      date_add($date, date_interval_create_from_date_string("1 day"));
+    }
+  }
+
   if (count($data) == 1) {
     $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
     $statement->bindValue(":room_id", $data['room_id']);
@@ -52,6 +60,14 @@ if ($_POST) {
 
       while ($result) {
         date_add($date, date_interval_create_from_date_string("1 day"));
+
+        if (in_array(date_format($date, 'l'), ['Saturday', 'Sunday'])) {
+          if (date_format($date, 'l') == 'Saturday') {
+            date_add($date, date_interval_create_from_date_string("2 days"));
+          } elseif (date_format($date, 'l') == 'Sunday') {
+            date_add($date, date_interval_create_from_date_string("1 day"));
+          }
+        }
 
         $statement = $pdo->prepare("SELECT * FROM court_appointment WHERE court_house_room_id=:room_id AND appointment_date=:date");
         $statement->bindValue(":room_id", $data['room_id']);
@@ -101,6 +117,14 @@ if ($_POST) {
       }
 
       date_add($date, date_interval_create_from_date_string("1 day"));
+
+      if (in_array(date_format($date, 'l'), ['Saturday', 'Sunday'])) {
+        if (date_format($date, 'l') == 'Saturday') {
+          date_add($date, date_interval_create_from_date_string("2 days"));
+        } elseif (date_format($date, 'l') == 'Sunday') {
+          date_add($date, date_interval_create_from_date_string("1 day"));
+        }
+      }
     }
 
     $statement = $pdo->prepare(

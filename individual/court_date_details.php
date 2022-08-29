@@ -99,7 +99,7 @@ $court_date = $statement->fetch(PDO::FETCH_ASSOC);
               <p>Defendant Name: <span><?php echo $court_date['defendant_name'] ?></span></p>
             </div>
             <div>
-              <p>Defendant ID No.: <span><?php echo $court_date['defendant_national_id'] ?></span></p>
+              <p>Defendant ID No: <span><?php echo $court_date['defendant_national_id'] ?></span></p>
             </div>
           </div>
           <div>
@@ -107,7 +107,7 @@ $court_date = $statement->fetch(PDO::FETCH_ASSOC);
               <p>Accused Name: <span><?php echo $court_date['accused_name'] ?></span></p>
             </div>
             <div>
-              <p>Accused ID No.: <span><?php echo $court_date['accused_national_id'] ?></span></p>
+              <p>Accused ID No: <span><?php echo $court_date['accused_national_id'] ?></span></p>
             </div>
           </div>
         </div>

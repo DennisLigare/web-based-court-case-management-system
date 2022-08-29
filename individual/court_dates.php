@@ -101,7 +101,7 @@ $court_dates = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <a href="court_date_details.php?id=<?php echo $court_date['court_appointment_id'] ?>" class="btn btn-outline-primary btn-sm">Details</a>
               </td>
             </tr>
-            <?php endforeach; ?>8
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>
